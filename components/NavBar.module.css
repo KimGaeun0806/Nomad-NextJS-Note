@@ -1,0 +1,11 @@
+/* css 모듈 방식 */
+/* 다른 컴포넌트에서도 같은 클래스이름을 사용할 수 있음 */
+
+.link {
+    text-decoration: none;
+}
+
+.active {
+    color: tomato;
+}
+

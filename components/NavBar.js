@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import styles from './NavBar.module.css';
+// import styles from './NavBar.module.css';
 
 export default function NavBar() {
   const router = useRouter();
@@ -11,15 +11,17 @@ export default function NavBar() {
 
     // Styled jsx 방식
     <nav>
-      <Link href="/">
-        <a className={router.pathname === '/' ? 'active' : ''}>Home</a>
-      </Link>
-      <Link href="/about">
-        <a className={router.pathname === '/about' ? 'active' : ''}>About</a>
-      </Link>
+      <img src="/vercel.svg" />
+      {/* ../과 같은 파일 경로들을 다 써줄 필요 없이 /파일명 만 하면 됨 */}
+      <div>
+        <Link href="/">
+          <a className={router.pathname === '/' ? 'active' : ''}>Home</a>
+        </Link>
+        <Link href="/about">
+          <a className={router.pathname === '/about' ? 'active' : ''}>About</a>
+        </Link>
+      </div>
       <style jsx>{`
-        a {
-          text-decoration: none;
         nav {
           display: flex;
           gap: 10px;

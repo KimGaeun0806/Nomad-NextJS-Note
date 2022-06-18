@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react';
 import Seo from '../components/Seo';
 
 // 라이브러리 -> 내가 사용하는 것. 내가 라이브러리를 불러오고 사용하는 것. 원하는 대로 코드를 작성할 수 있음. 자유도 높음.
@@ -11,13 +12,36 @@ import Seo from '../components/Seo';
 // 앱의 페이지들이 미리 렌더링(pre-rendering)됨. 정적(static)으로 생성됨.
 // hydration -> Next.js는 React.js를 백엔드에서 동작시켜서 페이지를 미리 만들고, 이게 컴포넌트들을 렌더함. 렌더링이 끝나면 html이 되고 Next.js는 그 html을 페이지의 소스코드에 넣음.
 
+const API_KEY = '0918740fd7853b6d014ebaa5fe8f061c';
+
 export default function Home() {
   // 파일 이름은 url에 그대로 들어가지만, 컴포넌트 이름은 중요하지 않음
   // export default를 하지 않으면 에러 발생
+
+  const [movies, setMovies] = useState();
+  useEffect(() => {
+    (async () => {
+      const { results } = await (
+        await fetch(
+          `https://api.themoviedb.org/3/movie/popular?api_key=${API_KEY}`
+        )
+      ).json();
+      // 가져온 데이터 객체에서 results를 사용하기 위해 { results }라고 씀
+      setMovies(results);
+    })();
+  }, []);
+
   return (
     <div>
       <Seo title="Home" />
-      <h1 className="active">Hello</h1>
+      {!movies && <h4>Loading...</h4>}
+      {/* movies가 존재하지 않을 때 Loading... 띄움 */}
+      {movies?.map((movie) => (
+        <div key={movie.id}>
+          <h4>{movie.original_title}</h4>
+        </div>
+      ))}
+      {/* ? 를 넣어서 movies가 존재하지 않으면 map이 실행되지 않도록 함 */}
     </div>
   );
 }
